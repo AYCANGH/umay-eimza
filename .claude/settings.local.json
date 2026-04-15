@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch(domain:ayyildizimza.com.tr)",
+      "Bash(node:*)",
+      "Bash(where node:*)",
+      "Read(//c/Program Files/**)",
+      "Bash(jq --version)",
+      "Bash(pwsh -Command \"echo ok\")",
+      "Bash(powershell.exe -Command \"echo ok\")",
+      "Bash(powershell.exe:*)",
+      "Bash(xxd)",
+      "Bash(grep -l \"GOOGLE_FORM\\\\|yetkilibayi\\\\|Yetkili Bayi\\\\|0850 000 00 00\\\\|905550000000\\\\|İstanbul, Türkiye\" *.html iller/*.html)",
+      "Bash(git --version)",
+      "Bash(gh --version)",
+      "Bash(gh auth:*)",
+      "Bash(git init:*)",
+      "Bash(git add:*)",
+      "Bash(git -c user.email=\"bilgi@umaybilisim.com.tr\" -c user.name=\"UMAY TUM BILISIM\" commit -m \"İlk yayın: Ayyıldız e-imza & KEP bayi sitesi\")"
+    ]
+  }
+}
