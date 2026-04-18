@@ -349,3 +349,11 @@ button{font-family:inherit;cursor:pointer;border:none}
 .mb-0{margin-bottom:0}
 .text-muted{color:var(--text-muted)}
 .accent{color:var(--accent)}
+
+/* ---------- WhatsApp Popup ---------- */
+.wa-popup{position:fixed;bottom:90px;right:24px;z-index:999;display:flex;align-items:flex-end;gap:10px;pointer-events:none;opacity:0;transform:translateY(16px);transition:opacity .4s ease,transform .4s ease}
+.wa-popup.is-visible{opacity:1;transform:translateY(0);pointer-events:auto}
+.wa-popup__bubble{background:var(--white);color:var(--text);padding:14px 20px;border-radius:16px 16px 4px 16px;box-shadow:0 6px 24px rgba(0,0,0,.15);font-size:.93rem;line-height:1.5;max-width:260px;position:relative}
+.wa-popup__bubble strong{display:block;color:var(--navy);margin-bottom:2px;font-size:.95rem}
+.wa-popup__close{position:absolute;top:6px;right:10px;background:none;border:none;font-size:1.1rem;color:var(--gray);cursor:pointer;padding:2px;line-height:1}
+.wa-popup__close:hover{color:var(--text)}

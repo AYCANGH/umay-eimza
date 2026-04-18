@@ -61,6 +61,25 @@
     animateCounters();
   }
 
+  // WhatsApp popup
+  var waPopup = document.getElementById('waPopup');
+  var waClose = document.getElementById('waPopupClose');
+  if (waPopup) {
+    var dismissed = sessionStorage.getItem('waPopupDismissed');
+    if (!dismissed) {
+      setTimeout(function() {
+        waPopup.classList.add('is-visible');
+      }, 5000);
+    }
+    if (waClose) {
+      waClose.addEventListener('click', function(e) {
+        e.preventDefault();
+        waPopup.classList.remove('is-visible');
+        sessionStorage.setItem('waPopupDismissed', '1');
+      });
+    }
+  }
+
   // Mark active nav link
   var path = location.pathname.split("/").pop() || "index.html";
   document.querySelectorAll(".nav a").forEach(function (a) {
