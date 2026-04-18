@@ -309,7 +309,7 @@ button{font-family:inherit;cursor:pointer;border:none}
 
 /* ---------- Footer ---------- */
 .site-footer{background:var(--navy-dark);color:#cbd5e1;padding:60px 0 24px}
-.site-footer .cols{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
+.site-footer .cols{display:grid;grid-template-columns:1fr 1fr 1.2fr 1fr;gap:32px;margin-bottom:40px;align-items:start}
 @media (max-width:900px){.site-footer .cols{grid-template-columns:1fr 1fr}}
 @media (max-width:560px){.site-footer .cols{grid-template-columns:1fr}}
 .site-footer h4{color:var(--white);font-size:1rem;margin:0 0 16px;text-transform:uppercase;letter-spacing:.06em}
