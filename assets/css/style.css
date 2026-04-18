@@ -260,6 +260,15 @@ button{font-family:inherit;cursor:pointer;border:none}
 .cta-strip .btn--navy{background:var(--white);color:var(--accent)}
 .cta-strip .btn--navy:hover{background:var(--navy);color:var(--white)}
 
+/* ---------- Stats Counter ---------- */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;padding:48px 0}
+.stat{text-align:center}
+.stat__number{font-size:clamp(2.2rem,5vw,3.2rem);font-weight:800;color:var(--accent);line-height:1;margin-bottom:6px;display:block}
+.stat__label{font-size:clamp(.88rem,1.5vw,1.05rem);color:rgba(255,255,255,.85);font-weight:500}
+.section--navy .stat__label{color:rgba(255,255,255,.85)}
+@media(max-width:760px){.stats{grid-template-columns:repeat(2,1fr);gap:24px}}
+@media(max-width:400px){.stats{grid-template-columns:1fr}}
+
 /* ---------- Breadcrumb ---------- */
 .breadcrumb{padding:16px 0;font-size:.88rem;color:var(--text-muted);background:var(--bg)}
 .breadcrumb a{color:var(--text-muted)}
