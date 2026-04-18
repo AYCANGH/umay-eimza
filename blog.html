@@ -9,16 +9,44 @@
 <link rel="stylesheet" href="assets/css/style.css">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230a2540'/%3E%3Ctext x='50' y='72' font-size='68' text-anchor='middle' fill='%23e63946'%3E%E2%98%85%3C/text%3E%3C/svg%3E">
 <style>
+.blog-layout{display:grid;grid-template-columns:260px 1fr;gap:32px;align-items:start}
+.blog-sidebar{position:sticky;top:100px}
+.blog-search{width:100%;padding:12px 16px 12px 42px;border:1px solid var(--border);border-radius:var(--radius);font-size:.95rem;background:var(--white) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E") no-repeat 14px center;transition:border-color var(--transition),box-shadow var(--transition)}
+.blog-search:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(230,57,70,.12)}
+.blog-search::placeholder{color:var(--text-muted)}
+.cat-list{list-style:none;padding:0;margin:20px 0 0}
+.cat-item{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-radius:8px;cursor:pointer;font-size:.93rem;font-weight:500;color:var(--text);transition:background var(--transition),color var(--transition);user-select:none}
+.cat-item:hover{background:var(--bg)}
+.cat-item.active{background:var(--navy);color:#fff}
+.cat-item .cat-count{font-size:.8rem;font-weight:700;background:var(--bg);color:var(--text-muted);padding:2px 8px;border-radius:20px;min-width:24px;text-align:center;transition:background var(--transition),color var(--transition)}
+.cat-item.active .cat-count{background:rgba(255,255,255,.2);color:#fff}
+.cat-divider{height:1px;background:var(--border);margin:16px 0}
+.blog-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
 .blog-card{display:flex;flex-direction:column;background:var(--white);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:transform var(--transition),box-shadow var(--transition)}
 .blog-card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
-.blog-card__img{height:200px;background:linear-gradient(135deg,var(--navy),var(--navy-light));display:grid;place-items:center;font-size:3rem;color:rgba(255,255,255,.3)}
-.blog-card__body{padding:24px;flex:1;display:flex;flex-direction:column}
-.blog-card__tag{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin-bottom:8px}
-.blog-card__body h3{font-size:1.15rem;margin-bottom:8px}
-.blog-card__body p{color:var(--text-muted);font-size:.94rem;flex:1;margin-bottom:16px}
-.blog-card__link{color:var(--accent);font-weight:700;font-size:.92rem;display:inline-flex;align-items:center;gap:4px}
-.blog-card__link::after{content:"→";transition:transform var(--transition)}
+.blog-card__img{height:180px;background:linear-gradient(135deg,var(--navy),var(--navy-light));display:grid;place-items:center;font-size:3rem;color:rgba(255,255,255,.3)}
+.blog-card__body{padding:20px 22px;flex:1;display:flex;flex-direction:column}
+.blog-card__tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+.blog-card__tag{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);padding:3px 8px;background:rgba(230,57,70,.08);border-radius:4px}
+.blog-card__tag--cat{color:var(--navy);background:rgba(10,37,64,.08)}
+.blog-card__body h3{font-size:1.1rem;margin-bottom:8px;line-height:1.4}
+.blog-card__body p{color:var(--text-muted);font-size:.9rem;flex:1;margin-bottom:14px;line-height:1.6}
+.blog-card__link{color:var(--accent);font-weight:700;font-size:.88rem;display:inline-flex;align-items:center;gap:4px}
+.blog-card__link::after{content:"\2192";transition:transform var(--transition)}
 .blog-card:hover .blog-card__link::after{transform:translateX(4px)}
+.blog-empty{grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--text-muted)}
+.blog-empty span{display:block;font-size:3rem;margin-bottom:12px;opacity:.4}
+.blog-empty p{font-size:1.05rem}
+.result-count{font-size:.88rem;color:var(--text-muted);margin-bottom:16px}
+@media(max-width:900px){
+  .blog-layout{grid-template-columns:1fr}
+  .blog-sidebar{position:static;display:flex;flex-direction:column;gap:12px}
+  .cat-list{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 0}
+  .cat-item{padding:8px 14px;font-size:.85rem;border:1px solid var(--border);border-radius:20px}
+  .cat-item.active{border-color:var(--navy)}
+  .cat-divider{display:none}
+  .blog-grid{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
@@ -52,67 +80,108 @@
 
 <section class="section">
   <div class="container">
-    <div class="grid grid-3">
+    <div class="blog-layout">
 
-      <a href="blog/e-imza-nedir-nasil-alinir.html" class="blog-card">
-        <div class="blog-card__img">✍</div>
-        <div class="blog-card__body">
-          <span class="blog-card__tag">Rehber</span>
-          <h3>E-İmza Nedir? Nasıl Alınır? (2026 Güncel Rehber)</h3>
-          <p>Elektronik imzanın ne olduğu, yasal dayanağı, kimlerin alması gerektiği ve adım adım başvuru süreci.</p>
-          <span class="blog-card__link">Devamını Oku</span>
-        </div>
-      </a>
+      <aside class="blog-sidebar">
+        <input type="search" class="blog-search" id="blogSearch" placeholder="Yazilarda ara..." autocomplete="off">
+        <ul class="cat-list" id="catList">
+          <li class="cat-item active" data-cat="all">Tümü <span class="cat-count" id="countAll">6</span></li>
+          <div class="cat-divider"></div>
+          <li class="cat-item" data-cat="e-imza">E-Imza <span class="cat-count" id="countEimza">4</span></li>
+          <li class="cat-item" data-cat="kep">KEP <span class="cat-count" id="countKep">1</span></li>
+          <li class="cat-item" data-cat="genel">Genel <span class="cat-count" id="countGenel">1</span></li>
+        </ul>
+      </aside>
 
-      <a href="blog/e-imza-kurulumu-nasil-yapilir.html" class="blog-card">
-        <div class="blog-card__img">💻</div>
-        <div class="blog-card__body">
-          <span class="blog-card__tag">Kurulum Rehberi</span>
-          <h3>E-İmza Kurulumu Nasıl Yapılır? (Windows Adım Adım)</h3>
-          <p>Kart okuyucu sürücüsü, Java kurulumu, tarayıcı ayarları ve ilk imza atma — ekran görüntüleriyle anlatım.</p>
-          <span class="blog-card__link">Devamını Oku</span>
-        </div>
-      </a>
+      <div>
+        <div class="result-count" id="resultCount"></div>
+        <div class="blog-grid" id="blogGrid">
 
-      <a href="blog/kep-nedir-kimler-almak-zorunda.html" class="blog-card">
-        <div class="blog-card__img">✉</div>
-        <div class="blog-card__body">
-          <span class="blog-card__tag">Yasal Bilgi</span>
-          <h3>KEP Nedir? Kimler Almak Zorunda? (2026)</h3>
-          <p>Kayıtlı elektronik posta zorunluluğu, cezai yaptırımlar, başvuru süreci ve KEP ile yapılabilecek işlemler.</p>
-          <span class="blog-card__link">Devamını Oku</span>
-        </div>
-      </a>
+          <a href="blog/e-imza-nedir-nasil-alinir.html" class="blog-card" data-cat="e-imza" data-title="E-İmza Nedir? Nasıl Alınır? 2026 Güncel Rehber" data-desc="Elektronik imzanın ne olduğu, yasal dayanağı, kimlerin alması gerektiği ve adım adım başvuru süreci.">
+            <div class="blog-card__img">&#9997;</div>
+            <div class="blog-card__body">
+              <div class="blog-card__tags">
+                <span class="blog-card__tag blog-card__tag--cat">E-Imza</span>
+                <span class="blog-card__tag">Rehber</span>
+              </div>
+              <h3>E-İmza Nedir? Nasıl Alınır? (2026 Güncel Rehber)</h3>
+              <p>Elektronik imzanın ne olduğu, yasal dayanağı, kimlerin alması gerektiği ve adım adım başvuru süreci.</p>
+              <span class="blog-card__link">Devamını Oku</span>
+            </div>
+          </a>
 
-      <a href="blog/e-imza-mobil-imza-farki.html" class="blog-card">
-        <div class="blog-card__img">📱</div>
-        <div class="blog-card__body">
-          <span class="blog-card__tag">Karşılaştırma</span>
-          <h3>E-İmza mı, Mobil İmza mı? Hangisi Daha Avantajlı?</h3>
-          <p>Elektronik imza ile mobil imza arasındaki farklar, avantaj ve dezavantajlar, hangi durumda hangisi tercih edilmeli.</p>
-          <span class="blog-card__link">Devamını Oku</span>
-        </div>
-      </a>
+          <a href="blog/e-imza-kurulumu-nasil-yapilir.html" class="blog-card" data-cat="e-imza" data-title="E-İmza Kurulumu Nasıl Yapılır? Windows Adım Adım" data-desc="Kart okuyucu sürücüsü, Java kurulumu, tarayıcı ayarları ve ilk imza atma.">
+            <div class="blog-card__img">&#128187;</div>
+            <div class="blog-card__body">
+              <div class="blog-card__tags">
+                <span class="blog-card__tag blog-card__tag--cat">E-Imza</span>
+                <span class="blog-card__tag">Kurulum</span>
+              </div>
+              <h3>E-İmza Kurulumu Nasıl Yapılır? (Windows Adım Adım)</h3>
+              <p>Kart okuyucu sürücüsü, Java kurulumu, tarayıcı ayarları ve ilk imza atma — ekran görüntüleriyle anlatım.</p>
+              <span class="blog-card__link">Devamını Oku</span>
+            </div>
+          </a>
 
-      <a href="blog/e-imza-suresi-doldu-ne-yapilmali.html" class="blog-card">
-        <div class="blog-card__img">🔄</div>
-        <div class="blog-card__body">
-          <span class="blog-card__tag">Yenileme</span>
-          <h3>E-İmza Süresi Doldu — Ne Yapılmalı?</h3>
-          <p>Süresi biten e-imzanın yenilenmesi, yeni sertifika çıkarma, PIN/PUK sorunları ve sık yapılan hatalar.</p>
-          <span class="blog-card__link">Devamını Oku</span>
-        </div>
-      </a>
+          <a href="blog/kep-nedir-kimler-almak-zorunda.html" class="blog-card" data-cat="kep" data-title="KEP Nedir? Kimler Almak Zorunda? 2026" data-desc="Kayıtlı elektronik posta zorunluluğu, cezai yaptırımlar, başvuru süreci ve KEP ile yapılabilecek işlemler.">
+            <div class="blog-card__img">&#9993;</div>
+            <div class="blog-card__body">
+              <div class="blog-card__tags">
+                <span class="blog-card__tag blog-card__tag--cat">KEP</span>
+                <span class="blog-card__tag">Yasal Bilgi</span>
+              </div>
+              <h3>KEP Nedir? Kimler Almak Zorunda? (2026)</h3>
+              <p>Kayıtlı elektronik posta zorunluluğu, cezai yaptırımlar, başvuru süreci ve KEP ile yapılabilecek işlemler.</p>
+              <span class="blog-card__link">Devamını Oku</span>
+            </div>
+          </a>
 
-      <a href="blog/e-imza-nerelerde-kullanilir.html" class="blog-card">
-        <div class="blog-card__img">🏛</div>
-        <div class="blog-card__body">
-          <span class="blog-card__tag">Kullanım</span>
-          <h3>E-İmza Nerelerde Kullanılır? 15 Uygulama Alanı</h3>
-          <p>e-Devlet, EKAP, GİB, SGK, MERSİS, e-fatura ve daha fazlası — e-imza ile yapabileceğiniz tüm işlemler.</p>
-          <span class="blog-card__link">Devamını Oku</span>
+          <a href="blog/e-imza-mobil-imza-farki.html" class="blog-card" data-cat="genel" data-title="E-İmza mı Mobil İmza mı? Hangisi Daha Avantajlı? Farklar" data-desc="Elektronik imza ile mobil imza arasındaki farklar, avantaj ve dezavantajlar, hangi durumda hangisi tercih edilmeli.">
+            <div class="blog-card__img">&#128241;</div>
+            <div class="blog-card__body">
+              <div class="blog-card__tags">
+                <span class="blog-card__tag blog-card__tag--cat">Genel</span>
+                <span class="blog-card__tag">Karsilastirma</span>
+              </div>
+              <h3>E-İmza mı, Mobil İmza mı? Hangisi Daha Avantajlı?</h3>
+              <p>Elektronik imza ile mobil imza arasındaki farklar, avantaj ve dezavantajlar, hangi durumda hangisi tercih edilmeli.</p>
+              <span class="blog-card__link">Devamını Oku</span>
+            </div>
+          </a>
+
+          <a href="blog/e-imza-suresi-doldu-ne-yapilmali.html" class="blog-card" data-cat="e-imza" data-title="E-İmza Süresi Doldu Ne Yapılmalı? Yenileme Rehberi" data-desc="Süresi biten e-imzanın yenilenmesi, yeni sertifika çıkarma, PIN PUK sorunları ve sık yapılan hatalar.">
+            <div class="blog-card__img">&#128260;</div>
+            <div class="blog-card__body">
+              <div class="blog-card__tags">
+                <span class="blog-card__tag blog-card__tag--cat">E-Imza</span>
+                <span class="blog-card__tag">Yenileme</span>
+              </div>
+              <h3>E-İmza Süresi Doldu — Ne Yapılmalı?</h3>
+              <p>Süresi biten e-imzanın yenilenmesi, yeni sertifika çıkarma, PIN/PUK sorunları ve sık yapılan hatalar.</p>
+              <span class="blog-card__link">Devamını Oku</span>
+            </div>
+          </a>
+
+          <a href="blog/e-imza-nerelerde-kullanilir.html" class="blog-card" data-cat="e-imza" data-title="E-İmza Nerelerde Kullanılır? 15 Uygulama Alanı" data-desc="e-Devlet, EKAP, GİB, SGK, MERSİS, e-fatura ve daha fazlası — e-imza ile yapabileceğiniz tüm işlemler.">
+            <div class="blog-card__img">&#127963;</div>
+            <div class="blog-card__body">
+              <div class="blog-card__tags">
+                <span class="blog-card__tag blog-card__tag--cat">E-Imza</span>
+                <span class="blog-card__tag">Kullanim</span>
+              </div>
+              <h3>E-İmza Nerelerde Kullanılır? 15 Uygulama Alanı</h3>
+              <p>e-Devlet, EKAP, GİB, SGK, MERSİS, e-fatura ve daha fazlası — e-imza ile yapabileceğiniz tüm işlemler.</p>
+              <span class="blog-card__link">Devamını Oku</span>
+            </div>
+          </a>
+
         </div>
-      </a>
+
+        <div class="blog-empty" id="blogEmpty" style="display:none">
+          <span>&#128269;</span>
+          <p>Aramanizla eslesen yazi bulunamadi.</p>
+        </div>
+      </div>
 
     </div>
   </div>
@@ -134,11 +203,84 @@
       <div><h4>Kurumsal</h4><ul><li><a href="hakkimizda.html">Hakkımızda</a></li><li><a href="blog.html">Blog</a></li><li><a href="sss.html">SSS</a></li><li><a href="iletisim.html">İletişim</a></li></ul></div>
       <div><h4>İletişim</h4><ul><li><a href="tel:+908507771145">0 850 777 11 45</a></li><li><a href="https://wa.me/908507771145" target="_blank" rel="noopener">WhatsApp</a></li><li><a href="mailto:bilgi@umaybilisim.com.tr">bilgi@umaybilisim.com.tr</a></li><li>Sakarya / Erenler</li></ul></div>
     </div>
-    <div class="footer-bottom">© 2026 UMAY TÜM BİLİŞİM LTD.ŞTİ. Tüm hakları saklıdır. Ayyıldız® tescilli markadır.</div>
+    <div class="footer-bottom">&copy; 2026 UMAY TÜM BİLİŞİM LTD.ŞTİ. Tüm hakları saklıdır. Ayyıldız&reg; tescilli markadır.</div>
   </div>
 </footer>
 
-<a href="https://wa.me/908507771145" class="fab-wa" target="_blank" rel="noopener" aria-label="WhatsApp">✆</a>
+<a href="https://wa.me/908507771145" class="fab-wa" target="_blank" rel="noopener" aria-label="WhatsApp">&#9742;</a>
 <script src="assets/js/main.js"></script>
+<script>
+(function(){
+  var search = document.getElementById('blogSearch');
+  var grid = document.getElementById('blogGrid');
+  var cards = Array.from(grid.querySelectorAll('.blog-card'));
+  var cats = Array.from(document.querySelectorAll('.cat-item'));
+  var empty = document.getElementById('blogEmpty');
+  var resultEl = document.getElementById('resultCount');
+  var activeCat = 'all';
+
+  function normalize(s){
+    return s.toLowerCase()
+      .replace(/ı/g,'i').replace(/İ/g,'i')
+      .replace(/ö/g,'o').replace(/Ö/g,'o')
+      .replace(/ü/g,'u').replace(/Ü/g,'u')
+      .replace(/ş/g,'s').replace(/Ş/g,'s')
+      .replace(/ç/g,'c').replace(/Ç/g,'c')
+      .replace(/ğ/g,'g').replace(/Ğ/g,'g');
+  }
+
+  function filter(){
+    var q = normalize(search.value.trim());
+    var shown = 0;
+    var catCounts = {all:0,'e-imza':0,kep:0,genel:0};
+
+    cards.forEach(function(card){
+      var cat = card.getAttribute('data-cat');
+      var title = normalize(card.getAttribute('data-title') || '');
+      var desc = normalize(card.getAttribute('data-desc') || '');
+      var text = title + ' ' + desc;
+      var matchSearch = !q || text.indexOf(q) !== -1;
+      var matchCat = activeCat === 'all' || cat === activeCat;
+
+      if(matchSearch){
+        catCounts[cat]++;
+        catCounts.all++;
+      }
+
+      if(matchSearch && matchCat){
+        card.style.display = '';
+        shown++;
+      } else {
+        card.style.display = 'none';
+      }
+    });
+
+    document.getElementById('countAll').textContent = catCounts.all;
+    document.getElementById('countEimza').textContent = catCounts['e-imza'];
+    document.getElementById('countKep').textContent = catCounts.kep;
+    document.getElementById('countGenel').textContent = catCounts.genel;
+
+    empty.style.display = shown === 0 ? '' : 'none';
+    grid.style.display = shown === 0 ? 'none' : '';
+
+    if(q){
+      resultEl.textContent = '"' + search.value.trim() + '" icin ' + shown + ' sonuc bulundu';
+    } else {
+      resultEl.textContent = '';
+    }
+  }
+
+  cats.forEach(function(item){
+    item.addEventListener('click', function(){
+      cats.forEach(function(c){ c.classList.remove('active'); });
+      item.classList.add('active');
+      activeCat = item.getAttribute('data-cat');
+      filter();
+    });
+  });
+
+  search.addEventListener('input', filter);
+})();
+</script>
 </body>
 </html>
