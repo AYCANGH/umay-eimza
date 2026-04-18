@@ -350,6 +350,22 @@ button{font-family:inherit;cursor:pointer;border:none}
 .text-muted{color:var(--text-muted)}
 .accent{color:var(--accent)}
 
+/* ---------- Testimonials ---------- */
+.testimonials{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.testimonial{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:28px 24px;position:relative;transition:transform var(--transition),box-shadow var(--transition)}
+.testimonial:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.testimonial__stars{color:#f59e0b;font-size:1rem;letter-spacing:2px;margin-bottom:12px}
+.testimonial__text{font-size:.93rem;color:var(--text);line-height:1.7;margin-bottom:18px;font-style:italic}
+.testimonial__author{display:flex;align-items:center;gap:12px}
+.testimonial__avatar{width:44px;height:44px;border-radius:50%;background:var(--navy);color:var(--white);display:grid;place-items:center;font-weight:700;font-size:1rem;flex-shrink:0}
+.testimonial__name{font-weight:700;font-size:.9rem;color:var(--navy)}
+.testimonial__role{font-size:.8rem;color:var(--text-muted)}
+.testimonial__badge{display:inline-block;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:3px 8px;border-radius:4px;margin-top:4px}
+.testimonial__badge--eimza{color:var(--accent);background:rgba(230,57,70,.08)}
+.testimonial__badge--kep{color:var(--navy);background:rgba(10,37,64,.08)}
+@media(max-width:900px){.testimonials{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.testimonials{grid-template-columns:1fr}}
+
 /* ---------- WhatsApp Popup ---------- */
 .wa-popup{position:fixed;bottom:90px;right:24px;z-index:999;display:flex;align-items:flex-end;gap:10px;pointer-events:none;opacity:0;transform:translateY(16px);transition:opacity .4s ease,transform .4s ease}
 .wa-popup.is-visible{opacity:1;transform:translateY(0);pointer-events:auto}
