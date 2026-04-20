@@ -126,8 +126,6 @@ button{font-family:inherit;cursor:pointer;border:none}
 .btn--wa:hover{background:var(--wa-dark);color:var(--white)}
 .btn--pay{background:var(--accent);color:var(--white)}
 .btn--pay:hover{background:#c5303b;color:var(--white)}
-.btn--mail{background:#0a6ebd;color:var(--white)}
-.btn--mail:hover{background:#085a9a;color:var(--white)}
 .btn--ghost{background:transparent;color:var(--navy);border:2px solid var(--navy)}
 .btn--ghost:hover{background:var(--navy);color:var(--white)}
 .btn--sm{padding:9px 16px;font-size:.88rem}
